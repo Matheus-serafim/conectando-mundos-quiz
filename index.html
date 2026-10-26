@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#205b4e">
+  <title>Conectando Mundos | Quiz</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Conectando Mundos - início">
+        <span class="brand-mark" aria-hidden="true">CM</span>
+        <span><strong>Conectando Mundos</strong><small>Mitologia · Tradição · Era Digital</small></span>
+      </a>
+      <span class="header-tag">QUIZ INTERATIVO</span>
+    </header>
+
+    <main>
+      <section id="home-screen" class="screen hero-layout">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> SABERES QUE ATRAVESSAM GERAÇÕES</span>
+          <h1>Conhecimento também é uma forma de <em>conexão.</em></h1>
+          <p>Teste o que você aprendeu sobre os povos indígenas, suas tradições, seus territórios e os caminhos para a inclusão digital.</p>
+          <div class="topic-row"><span>Território</span><span>Memória</span><span>Protagonismo</span></div>
+        </div>
+        <div class="panel start-panel">
+          <div class="panel-icon" aria-hidden="true">✳</div>
+          <h2>Vamos jogar?</h2>
+          <p class="muted">Digite seu nome para criar uma sala ou entrar em uma partida.</p>
+          <label for="player-name">Seu nome</label>
+          <input id="player-name" maxlength="22" autocomplete="nickname" placeholder="Como podemos te chamar?">
+          <button id="create-room-btn" class="button button-primary">Criar sala <span>↗</span></button>
+          <div class="or-divider"><span>ou entre em uma sala</span></div>
+          <label for="room-code-input">Código da sala</label>
+          <div class="join-row">
+            <input id="room-code-input" maxlength="6" placeholder="Ex.: A7K2P" autocomplete="off">
+            <button id="join-room-btn" class="button button-outline">Entrar</button>
+          </div>
+          <p id="home-message" class="message" role="status"></p>
+        </div>
+      </section>
+
+      <section id="lobby-screen" class="screen hidden">
+        <div class="section-heading">
+          <span class="eyebrow">SALA DE JOGO</span>
+          <h1>Todo mundo conectado.</h1>
+          <p class="muted">Compartilhe o QR Code ou o código abaixo com os participantes.</p>
+        </div>
+        <div class="lobby-grid">
+          <article class="panel room-card">
+            <span class="label-small">CÓDIGO DA SALA</span>
+            <div class="room-code-line"><strong id="room-code-display">------</strong><button id="copy-room-btn" class="icon-button" aria-label="Copiar código" title="Copiar código">▣</button></div>
+            <div id="qrcode" class="qr-wrap"><span class="muted">Preparando QR Code…</span></div>
+            <p class="muted tiny">Escaneie com a câmera do celular para abrir o jogo.</p>
+            <div class="room-status"><span class="status-dot"></span><span id="lobby-status">Aguardando participantes</span></div>
+          </article>
+          <article class="panel participants-card">
+            <div class="card-heading"><div><span class="label-small">PARTICIPANTES</span><h2><span id="participant-count">0</span> jogadores</h2></div><span class="leaf-icon">❋</span></div>
+            <ul id="participants-list" class="participants-list"></ul>
+            <p id="waiting-hint" class="muted tiny">A partida começa quando o líder estiver pronto.</p>
+            <button id="start-game-btn" class="button button-primary full-width hidden">Iniciar partida <span>→</span></button>
+            <p id="lobby-message" class="message" role="status"></p>
+          </article>
+        </div>
+        <button id="leave-room-btn" class="text-button">Sair da sala</button>
+      </section>
+
+      <section id="quiz-screen" class="screen hidden">
+        <div class="quiz-topline"><span class="eyebrow">CONHECIMENTO EM MOVIMENTO</span><span class="score-pill">Pontos <strong id="score-display">0</strong></span></div>
+        <div class="quiz-meta"><span id="question-counter">Pergunta 1 de 10</span><span class="timer"><span>◷</span> <strong id="timer-display">20</strong>s</span></div>
+        <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+        <article class="panel question-panel">
+          <span id="question-category" class="label-small">TRADIÇÃO E CULTURA</span>
+          <h2 id="question-text">Carregando pergunta…</h2>
+          <div id="answers-container" class="answers-grid"></div>
+          <div id="answer-feedback" class="feedback hidden" role="status"></div>
+          <div class="question-footer"><span class="muted tiny">Cada resposta é uma oportunidade de aprender.</span><button id="next-question-btn" class="button button-primary hidden">Próxima <span>→</span></button></div>
+        </article>
+        <div class="live-players"><span class="status-dot"></span><span id="quiz-room-info">Você está jogando em uma sala</span><span id="finished-count" class="muted"></span></div>
+      </section>
+
+      <section id="waiting-screen" class="screen hidden">
+        <div class="panel waiting-panel">
+          <div class="waiting-symbol">✳</div><span class="eyebrow">ETAPA CONCLUÍDA</span>
+          <h1>Você terminou!</h1>
+          <p class="muted">Suas respostas foram registradas. Estamos aguardando os outros participantes para revelar o resultado final.</p>
+          <div class="waiting-score"><span>Sua pontuação</span><strong id="waiting-score">0</strong></div>
+          <div class="waiting-progress"><div id="finished-progress-bar"></div></div>
+          <p id="waiting-count" class="muted">Aguardando os demais jogadores…</p>
+          <p class="tiny muted">O pódio será exibido quando todos terminarem ou quando o líder encerrar a partida.</p>
+          <button id="host-reveal-btn" class="button button-outline hidden">Encerrar e revelar resultados</button>
+        </div>
+      </section>
+
+      <section id="results-screen" class="screen hidden">
+        <div class="section-heading centered"><span class="eyebrow">NOSSO CONHECIMENTO COMPARTILHADO</span><h1>O pódio da conexão.</h1><p class="muted">Parabéns a todos que participaram!</p></div>
+        <div id="podium" class="podium"></div>
+        <article class="panel results-panel"><div class="card-heading"><div><span class="label-small">RESULTADO DA SALA</span><h2>Classificação final</h2></div><span class="leaf-icon">❋</span></div><ol id="final-ranking" class="ranking-list"></ol></article>
+        <div class="results-actions"><button id="back-home-btn" class="button button-primary">Voltar ao início</button></div>
+      </section>
+    </main>
+    <footer><span class="footer-symbol">✳</span><span>Conectando Mundos</span><span class="footer-separator">·</span><span>Respeito, memória e protagonismo</span></footer>
+  </div>
+  <div id="toast" class="toast hidden" role="status"></div>
+</body>
+</html>
